@@ -1,0 +1,19 @@
+// protoc --go_out=. --go_opt=paths=source_relative --go-grpc_out=. --go-grpc_opt=paths=source_relative P2P/P2P.proto
+syntax = "proto3";
+
+option go_package = "../P2P";
+
+package P2P;
+
+service ChatService {
+  rpc Connect (Send) returns (Response) {}
+  rpc Disconnect (Send) returns (Response) {}
+}
+
+message Send {
+  int64 Port = 1;
+}
+
+message Response {
+  string Message = 1;
+}
