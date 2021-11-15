@@ -1,5 +1,4 @@
-# disys_exc2
-DISYS 2021 Mandatory excercise 2
+# DISYS 2021 Mandatory excercise 2
 
 You have to implement distributed mutual exclusion between nodes in your distributed system. 
 
