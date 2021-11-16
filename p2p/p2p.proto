@@ -3,9 +3,9 @@ syntax = "proto3";
 
 option go_package = "../p2p";
 
-package P2P;
+package p2p;
 
-service ChatService {
+service p2pService {
   rpc Connect (Send) returns (Response) {}
   rpc Disconnect (Send) returns (Response) {}
 }
@@ -16,4 +16,8 @@ message Send {
 
 message Response {
   string Message = 1;
+}
+
+message LatestId {
+  int64 Id = 1;
 }
