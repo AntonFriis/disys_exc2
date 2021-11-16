@@ -4,22 +4,24 @@ import (
 	"bufio"
 	pb "disys_exc2/p2p"
 	"fmt"
-	"golang.org/x/net/context"
-	"google.golang.org/grpc"
-	"google.golang.org/grpc/reflection"
 	"log"
 	"net"
 	"os"
 	"strconv"
 	"strings"
 	"time"
+
+	"golang.org/x/net/context"
+	"google.golang.org/grpc"
+	"google.golang.org/grpc/reflection"
 )
 
 type node struct {
-	client pb.P2PServiceClient
-	server pb.UnimplementedP2PServiceServer
-	Addr string
-	Id int64
+	client  pb.P2PServiceClient
+	server  pb.UnimplementedP2PServiceServer
+	Addr    string
+	Con     string
+	Id      int64
 	IsFirst bool
 }
 
@@ -28,7 +30,7 @@ func (node node) mustEmbedUnimplementedP2PServiceServer() {
 }
 
 func (node node) Disconnect(ctx context.Context, send *pb.Send) (*pb.Response, error) {
-	return &pb.Response{Message: "Node "+ strconv.FormatInt(node.Id, 10) + " has disconnected!"}, nil
+	return &pb.Response{Message: "Node " + strconv.FormatInt(node.Id, 10) + " has disconnected!"}, nil
 }
 
 var conn *grpc.ClientConn
@@ -37,36 +39,38 @@ var LastId int64
 
 func NewNode(Id int64) *node {
 	node := node{
-		client: nil,
-		Addr: Port(Id),
-		Id: Id,
+		client:  nil,
+		Id:      Id,
 		IsFirst: true,
 	}
 	return &node
 }
 
 // Port TODO: Fix cursed code
-func Port(NodeId int64) string {
+func Port(NodeId int64) (string, string) {
 	file, err := os.Open("ports.txt")
 	if err != nil {
 		log.Fatal(err)
 	}
 	scanner := bufio.NewScanner(file)
-	var Port0 string //Fix cursed line
+	var Port0, Port1 string //Fix cursed line
 	for scanner.Scan() {
 		IdPort := strings.Split(scanner.Text(), " ")
 		Id, _ := strconv.ParseInt(IdPort[0], 10, 64)
-		if Id == 0 {Port0 = IdPort[1]} //Fix cursed line
-		if Id == NodeId {return IdPort[1]}
+		if Id == NodeId {
+			Port0 = IdPort[1]
+			Port1 = IdPort[2]
+		}
 	}
-	return Port0 //Fix cursed line
+	return Port0, Port1
+
 }
 
 func (node *node) Connect(ctx context.Context, send *pb.Send) (*pb.Response, error) {
 	var err error
-	ConPort := Port(send.Port)
+	ConPort := node.Con
 	conn, err = grpc.Dial(ConPort, grpc.WithInsecure())
-	return &pb.Response{Message: "Node "+ strconv.FormatInt(node.Id, 10) + " has connected on port: " + ConPort}, err
+	return &pb.Response{Message: "Node " + strconv.FormatInt(node.Id, 10) + " has connected on port: " + ConPort}, err
 }
 
 func (node *node) listen() {
@@ -86,6 +90,19 @@ func (node *node) listen() {
 	if err := server.Serve(lis); err != nil {
 		log.Fatalf("failed to serve: %v", err)
 	}
+}
+
+func (node *node) send() {
+
+	// msg := "asssssssssssssssss hej"
+	// log.Printf("%d sends regards \n", node.Id)
+
+	// resp, err := node.Connect(ctx,msg)
+	// if err != nil {
+	// 	log.Fatalf("Broadcasting problem: %v", err)
+	// }
+
+	// log.Println(resp)
 }
 
 func main() {
@@ -123,9 +140,10 @@ func main() {
 
 	//Create node
 	node := NewNode(Id)
+	node.Addr, node.Con = Port(node.Id)
 
 	//Increment LastId by 1
-	LastId.Id = LastId.Id+1
+	LastId.Id = LastId.Id + 1
 
 	//var opts []grpc.DialOption
 	// Set up a connection to the server.
@@ -143,9 +161,7 @@ func main() {
 	defer cancel()
 
 	go node.listen()
-
-	for {
-		time.Sleep(60 * time.Second)
-	}
+	fmt.Print("before sleep")
+	time.Sleep(time.Second)
+	fmt.Print("after sleep")
 }
-

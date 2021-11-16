@@ -1,16 +1,15 @@
-2021/11/16 12:55:04 Node 0 has connected on port: localhost:0000
-2021/11/16 12:55:04 Node 0: listening on port: localhost:0000
-2021/11/16 12:55:20 Node 1 has connected on port: localhost:0000
-2021/11/16 12:55:20 Node 1: listening on port: localhost:0001
-2021/11/16 12:56:01 Node 2 has connected on port: localhost:0000
-2021/11/16 12:56:01 Node 2: listening on port: localhost:0002
-2021/11/16 13:01:39 Node 6 has connected on port: localhost:0000
-2021/11/16 13:01:39 Node 6: listening on port: localhost:0000
-2021/11/16 13:01:56 Node 5 has connected on port: localhost:0000
-2021/11/16 13:01:56 Node 5: listening on port: localhost:0000
-2021/11/16 13:02:40 Node 4 has connected on port: localhost:0000
-2021/11/16 13:02:40 Node 4: listening on port: localhost:0004
-2021/11/16 13:03:03 Node 3 has connected on port: localhost:0000
-2021/11/16 13:03:03 Node 3: listening on port: localhost:0003
-2021/11/16 13:03:35 Node 2 has connected on port: localhost:0000
-2021/11/16 13:03:35 Node 2: listening on port: localhost:0002
+
+2021/11/16 14:00:42 Node 4 has connected on port: localhost:0000
+2021/11/16 14:00:42 Node 4: listening on port: localhost:0004
+2021/11/16 14:00:49 Node 0 has connected on port: localhost:0001
+2021/11/16 14:00:49 Node 0: listening on port: localhost:0000
+2021/11/16 14:00:56 Node 1 has connected on port: localhost:0002
+2021/11/16 14:00:56 Node 1: listening on port: localhost:0001
+2021/11/16 14:01:00 Node 2 has connected on port: localhost:0003
+2021/11/16 14:01:00 Node 2: listening on port: localhost:0002
+2021/11/16 14:01:05 Node 3 has connected on port: localhost:0004
+2021/11/16 14:01:05 Node 3: listening on port: localhost:0003
+2021/11/16 14:05:28 Node 4 has connected on port: localhost:0000
+2021/11/16 14:05:28 Node 4: listening on port: localhost:0004
+2021/11/16 14:12:44 Node 4 has connected on port: localhost:0000
+2021/11/16 14:12:44 Node 4: listening on port: localhost:0004
