@@ -12,5 +12,6 @@ require (
 	golang.org/x/net v0.0.0-20200822124328-c89045814202 // indirect
 	golang.org/x/sys v0.0.0-20200323222414-85ca7c5b95cd // indirect
 	golang.org/x/text v0.3.0 // indirect
-	google.golang.org/genproto v0.0.0-20200526211855-cb27e3aa2013 // indirect
+	google.golang.org/genproto v0.0.0-20200806141610-86f49bd18e98 // indirect
+	google.golang.org/grpc/examples v0.0.0-20211116194929-23becb71f7f8
 )

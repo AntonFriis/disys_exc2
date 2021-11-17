@@ -1,15 +1,74 @@
-
-2021/11/16 14:00:42 Node 4 has connected on port: localhost:0000
-2021/11/16 14:00:42 Node 4: listening on port: localhost:0004
-2021/11/16 14:00:49 Node 0 has connected on port: localhost:0001
-2021/11/16 14:00:49 Node 0: listening on port: localhost:0000
-2021/11/16 14:00:56 Node 1 has connected on port: localhost:0002
-2021/11/16 14:00:56 Node 1: listening on port: localhost:0001
-2021/11/16 14:01:00 Node 2 has connected on port: localhost:0003
-2021/11/16 14:01:00 Node 2: listening on port: localhost:0002
-2021/11/16 14:01:05 Node 3 has connected on port: localhost:0004
-2021/11/16 14:01:05 Node 3: listening on port: localhost:0003
-2021/11/16 14:05:28 Node 4 has connected on port: localhost:0000
-2021/11/16 14:05:28 Node 4: listening on port: localhost:0004
-2021/11/16 14:12:44 Node 4 has connected on port: localhost:0000
-2021/11/16 14:12:44 Node 4: listening on port: localhost:0004
+2021/11/17 17:14:30 server listening at 127.0.0.1:8080
+2021/11/17 17:14:31 server listening at 127.0.0.1:8081
+2021/11/17 17:14:33 server listening at 127.0.0.1:8082
+2021/11/17 17:14:34 server listening at 127.0.0.1:8083
+2021/11/17 17:14:35 server listening at 127.0.0.1:8084
+2021/11/17 17:14:45 Node 0 has enterede the critical zone
+2021/11/17 17:14:46 Node 0 has left the critical zone
+2021/11/17 17:14:46 *************************************************************************
+2021/11/17 17:14:46 Node 0 has sent message to Node 1
+2021/11/17 17:14:46 Node 1 has enterede the critical zone
+2021/11/17 17:14:47 Node 1 has left the critical zone
+2021/11/17 17:14:47 *************************************************************************
+2021/11/17 17:14:47 Node 1 has sent message to Node 2
+2021/11/17 17:14:47 Node 2 has enterede the critical zone
+2021/11/17 17:14:48 Node 2 has left the critical zone
+2021/11/17 17:14:49 *************************************************************************
+2021/11/17 17:14:49 Node 2 has sent message to Node 3
+2021/11/17 17:14:49 Node 3 has enterede the critical zone
+2021/11/17 17:14:50 Node 3 has left the critical zone
+2021/11/17 17:14:50 *************************************************************************
+2021/11/17 17:14:50 Node 3 has sent message to Node 4
+2021/11/17 17:14:50 Node 4 has enterede the critical zone
+2021/11/17 17:14:51 Node 4 has left the critical zone
+2021/11/17 17:14:51 *************************************************************************
+2021/11/17 17:14:51 Node 4 has sent message to Node 0
+2021/11/17 17:14:51 Node 0 has enterede the critical zone
+2021/11/17 17:14:52 Node 0 has left the critical zone
+2021/11/17 17:14:53 *************************************************************************
+2021/11/17 17:14:53 Node 0 has sent message to Node 1
+2021/11/17 17:14:53 Node 1 has enterede the critical zone
+2021/11/17 17:14:54 Node 1 has left the critical zone
+2021/11/17 17:14:54 *************************************************************************
+2021/11/17 17:14:54 Node 1 has sent message to Node 2
+2021/11/17 17:14:54 Node 2 has enterede the critical zone
+2021/11/17 17:14:55 Node 2 has left the critical zone
+2021/11/17 17:14:55 *************************************************************************
+2021/11/17 17:14:55 Node 2 has sent message to Node 3
+2021/11/17 17:14:55 Node 3 has enterede the critical zone
+2021/11/17 17:14:56 Node 3 has left the critical zone
+2021/11/17 17:14:56 *************************************************************************
+2021/11/17 17:14:56 Node 3 has sent message to Node 4
+2021/11/17 17:14:56 Node 4 has enterede the critical zone
+2021/11/17 17:14:57 Node 4 has left the critical zone
+2021/11/17 17:14:58 *************************************************************************
+2021/11/17 17:14:58 Node 4 has sent message to Node 0
+2021/11/17 17:14:58 Node 0 has enterede the critical zone
+2021/11/17 17:14:59 Node 0 has left the critical zone
+2021/11/17 17:14:59 *************************************************************************
+2021/11/17 17:14:59 Node 0 has sent message to Node 1
+2021/11/17 17:14:59 Node 1 has enterede the critical zone
+2021/11/17 17:15:00 Node 1 has left the critical zone
+2021/11/17 17:15:00 *************************************************************************
+2021/11/17 17:15:00 Node 1 has sent message to Node 2
+2021/11/17 17:15:00 Node 2 has enterede the critical zone
+2021/11/17 17:15:01 Node 2 has left the critical zone
+2021/11/17 17:15:02 *************************************************************************
+2021/11/17 17:15:02 Node 2 has sent message to Node 3
+2021/11/17 17:15:02 Node 3 has enterede the critical zone
+2021/11/17 17:15:03 Node 3 has left the critical zone
+2021/11/17 17:15:03 *************************************************************************
+2021/11/17 17:15:03 Node 3 has sent message to Node 4
+2021/11/17 17:15:03 Node 4 has enterede the critical zone
+2021/11/17 17:15:04 Node 4 has left the critical zone
+2021/11/17 17:15:04 *************************************************************************
+2021/11/17 17:15:04 Node 4 has sent message to Node 0
+2021/11/17 17:15:04 Node 0 has enterede the critical zone
+2021/11/17 17:15:05 Node 0 has left the critical zone
+2021/11/17 17:15:06 *************************************************************************
+2021/11/17 17:15:06 Node 0 has sent message to Node 1
+2021/11/17 17:15:06 Node 1 has enterede the critical zone
+2021/11/17 17:15:07 Node 1 has left the critical zone
+2021/11/17 17:15:07 *************************************************************************
+2021/11/17 17:15:07 Node 1 has sent message to Node 2
+2021/11/17 17:15:07 Node 2 has enterede the critical zone
