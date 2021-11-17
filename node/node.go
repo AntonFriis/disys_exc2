@@ -4,43 +4,37 @@ import (
 	"bufio"
 	pb "disys_exc2/p2p"
 	"fmt"
-	"golang.org/x/net/context"
-	"google.golang.org/grpc"
-	"google.golang.org/grpc/reflection"
 	"log"
 	"net"
 	"os"
 	"strconv"
 	"strings"
 	"time"
+
+	"golang.org/x/net/context"
+	"google.golang.org/grpc"
+	"google.golang.org/grpc/reflection"
 )
 
 type node struct {
-	client pb.P2PServiceClient
-	server pb.UnimplementedP2PServiceServer
-	Addr string
-	Id int64
-	IsFirst bool
+	Client pb.P2PServiceClient
+	ctx    context.Context
+	conn   *grpc.ClientConn
+	Addr   int64
+	Id     int64
+	IsLast bool
 }
 
-func (node node) mustEmbedUnimplementedP2PServiceServer() {
-	panic("implement me")
+type Server struct {
+	pb.UnimplementedP2PServiceServer
+	this node
 }
-
-func (node node) Disconnect(ctx context.Context, send *pb.Send) (*pb.Response, error) {
-	return &pb.Response{Message: "Node "+ strconv.FormatInt(node.Id, 10) + " has disconnected!"}, nil
-}
-
-var conn *grpc.ClientConn
-var ctx context.Context
-var LastId int64
 
 func NewNode(Id int64) *node {
 	node := node{
-		client: nil,
-		Addr: Port(Id),
-		Id: Id,
-		IsFirst: true,
+		Addr:   0000,
+		Id:     0,
+		IsLast: true,
 	}
 	return &node
 }
@@ -56,44 +50,72 @@ func Port(NodeId int64) string {
 	for scanner.Scan() {
 		IdPort := strings.Split(scanner.Text(), " ")
 		Id, _ := strconv.ParseInt(IdPort[0], 10, 64)
-		if Id == 0 {Port0 = IdPort[1]} //Fix cursed line
-		if Id == NodeId {return IdPort[1]}
+		if Id == 0 {
+			Port0 = IdPort[1]
+		} //Fix cursed line
+		if Id == NodeId {
+			return IdPort[1]
+		}
 	}
 	return Port0 //Fix cursed line
 }
 
 func (node *node) Connect(ctx context.Context, send *pb.Send) (*pb.Response, error) {
 	var err error
-	ConPort := Port(send.Port)
-	conn, err = grpc.Dial(ConPort, grpc.WithInsecure())
-	return &pb.Response{Message: "Node "+ strconv.FormatInt(node.Id, 10) + " has connected on port: " + ConPort}, err
+	ConPort := "localhost:" + Port(send.Port)
+	node.conn, err = grpc.Dial(ConPort, grpc.WithInsecure())
+	if err != nil {
+		log.Printf("Connection error when trying to join on port: " + ConPort)
+	}
+
+	node.Client = pb.NewP2PServiceClient(node.conn)
+
+	return &pb.Response{Message: "Node " + strconv.FormatInt(node.Id, 10) + " has connected on port: " + ConPort}, err
 }
 
-func (node *node) listen() {
+func (node *node) Disconnect(ctx context.Context, send *pb.Send) (*pb.Response, error) {
+	err := node.conn.Close()
+	return &pb.Response{Message: "Node " + strconv.FormatInt(node.Id, 10) + " has disconnected!"}, err
+}
+
+func (node *node) Reconnect(ctx context.Context, send *pb.Send) (*pb.Response, error) {
+	_, err := node.Disconnect(ctx, send)
+	if err != nil {
+		return nil, err
+	}
+	_, err = node.Connect(ctx, send)
+	if err != nil {
+		return nil, err
+	}
+	return &pb.Response{Message: "Node " + strconv.FormatInt(node.Id, 10) + " has reconnected on port: " + strconv.FormatInt(node.Addr, 10)}, err
+}
+
+func (node *node) listen(server Server) {
 	log.Printf("Node %v: listening on port: %v\n", node.Id, node.Addr)
-	lis, err := net.Listen("tcp", node.Addr)
+	lis, err := net.Listen("tcp", "localhost:"+strconv.FormatInt(node.Addr, 10))
 	if err != nil {
 		log.Fatalf("failed to listen: %v", err)
 	}
 
-	server := grpc.NewServer() // n is for serving purpose
+	n := grpc.NewServer() // n is for serving purpose
 
-	pb.RegisterP2PServiceServer(server, node.server)
-	// Register reflection service on gRPC server.
-	reflection.Register(server)
+	pb.RegisterP2PServiceServer(n, server)
+	// Register reflection service on gRPC Server.
+	reflection.Register(n)
 
 	// start listening
-	if err := server.Serve(lis); err != nil {
+	if err := n.Serve(lis); err != nil {
 		log.Fatalf("failed to serve: %v", err)
 	}
 }
 
 func main() {
+	//main TODO: remove args requirement and automatically increase id by 1.
 	// pass the port as an argument and also the port of the other node
 	args := os.Args[1:]
 
 	if len(args) < 1 {
-		fmt.Println("Arguments required: <id> as int 0-4")
+		fmt.Println("Arguments required: \"go run node/node.go <id>\" as int 0-4")
 		os.Exit(1)
 	}
 
@@ -119,33 +141,34 @@ func main() {
 
 	log.SetOutput(logFile)
 
-	LastId := pb.LatestId{Id: LastId}
-
 	//Create node
 	node := NewNode(Id)
 
-	//Increment LastId by 1
-	LastId.Id = LastId.Id+1
+	//Create server
+	server := Server{this: *node}
 
-	//var opts []grpc.DialOption
-	// Set up a connection to the server.
-	msg, err := node.Connect(ctx, &pb.Send{Port: 0})
+	//Reconnect the old nodes
+
+	// Set up a connection to first node.
+	msg, err := node.Connect(node.ctx, &pb.Send{Port: node.Addr + 1})
+	if err != nil {
+		return
+	}
 	if err != nil {
 		log.Fatalf("did not connect: %v", err)
 	}
 	log.Printf(msg.Message)
-	defer conn.Close()
+	defer node.conn.Close()
 
-	node.client = pb.NewP2PServiceClient(conn)
+	node.Client = pb.NewP2PServiceClient(node.conn)
 
 	var cancel context.CancelFunc
-	ctx, cancel = context.WithTimeout(context.Background(), 10*time.Minute)
+	node.ctx, cancel = context.WithTimeout(context.Background(), 10*time.Minute)
 	defer cancel()
 
-	go node.listen()
+	go node.listen(server)
 
 	for {
 		time.Sleep(60 * time.Second)
 	}
 }
-

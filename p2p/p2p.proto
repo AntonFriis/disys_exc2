@@ -17,7 +17,3 @@ message Send {
 message Response {
   string Message = 1;
 }
-
-message LatestId {
-  int64 Id = 1;
-}

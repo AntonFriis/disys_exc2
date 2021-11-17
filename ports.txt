@@ -1,5 +1,5 @@
-0 localhost:0000
-1 localhost:0001
-2 localhost:0002
-3 localhost:0003
-4 localhost:0004
+0 0000
+1 0001
+2 0002
+3 0003
+4 0004
