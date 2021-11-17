@@ -2,8 +2,8 @@
 The system is hardcoded to run with 5 nodes but needs an input so run the following comands in each terminal.
 All comands schould be run from root folder.
 
-***IMPORTANT***
-once node 0 has been aktivatede it will wait 15s before entering the critical section and starting the cirkel
+***IMPORTANT***  
+Once node 0 has been activated it will wait 15 seconds before entering the critical section and starting the cirkel connection.
 
 ```golang
 go run node/node.go 0
