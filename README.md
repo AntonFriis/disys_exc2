@@ -1,3 +1,25 @@
+# How to run 
+The system is hardcoded to run with 5 nodes but needs an input so run the following comands in each terminal.
+All comands schould be run from root folder.
+
+***IMPORTANT***
+once node 0 has been aktivatede it will wait 15s before entering the critical section and starting the cirkel
+
+```golang
+go run node/node.go 0
+
+go run node/node.go 1
+
+go run node/node.go 2
+
+go run node/node.go 3
+
+go run node/node.go 4
+```
+
+
+
+
 # DISYS 2021 Mandatory excercise 2
 
 You have to implement distributed mutual exclusion between nodes in your distributed system. 
